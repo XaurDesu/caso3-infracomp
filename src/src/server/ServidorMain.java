@@ -9,7 +9,7 @@ public class ServidorMain {
 	
 	private static ServerSocket ss;	
 	private static final String ID = "Main Server: ";
-	private static int puerto = 4030;
+	private static int puerto = 2017;
 
 	public static void main(String[] args) throws IOException {
 		

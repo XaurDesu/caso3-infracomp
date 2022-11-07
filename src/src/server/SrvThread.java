@@ -1,6 +1,8 @@
 package server;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigInteger;
@@ -49,6 +51,9 @@ public class SrvThread extends Thread{
 	    System.out.println(dlg + "starting.");
 	    f = new SecurityFunctions();
 	    
+	    DataOutputStream os;
+		
+	    
 		if (mod==0) {
 			System.out.println("Running test 0.");
 		} else if (mod==1){
@@ -63,10 +68,17 @@ public class SrvThread extends Thread{
 			PublicKey publicaServidor = f.read_kplus("../../datos_asim_srv.pub",dlg);
 			PrintWriter ac = new PrintWriter(sc.getOutputStream() , true);
 			BufferedReader dc = new BufferedReader(new InputStreamReader(sc.getInputStream()));
-				    	
+			
+			os = new DataOutputStream(sc.getOutputStream());
+			os.writeUTF("Prueba saludo");
 			linea = dc.readLine();
+			//linea = f.adec(linea.getBytes(), privadaServidor);
+			
+			System.out.println(linea);
 			System.out.println(dlg + "reading request: " + linea);
-    		
+			
+			
+			
     		generateGandP();
 			SecureRandom r = new SecureRandom();
 			int x = Math.abs(r.nextInt());

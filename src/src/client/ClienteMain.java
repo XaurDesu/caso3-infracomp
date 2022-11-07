@@ -1,6 +1,9 @@
 package client;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.security.*;
 import java.net.*;
@@ -9,7 +12,7 @@ import server.SecurityFunctions;
 public class ClienteMain {
 
     private static String host = "localhost";
-    private static int puerto = 4030;
+    private static int puerto = 2017;
 
     private static Socket s;
     
@@ -18,6 +21,7 @@ public class ClienteMain {
 
     public static void main(String[] args) throws IOException {
         s = new Socket(host, puerto);
+        DataOutputStream os = new DataOutputStream(s.getOutputStream());
         System.out.println("Connection socket created on port: "+puerto);
         f = new SecurityFunctions();
         String xd = "1";
@@ -33,14 +37,19 @@ public class ClienteMain {
 			
 			String recuperado = f.adec(cifrado2, privadaServidor);
 			//System.out.println(recuperado);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
-        for(int i=0;i<1000;i++) {
-        	os.writeUTF("Hola, que mas");
-        }
+        
+        BufferedReader dc = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        
+        //String linea = dc.readLine();
+        //System.out.println(linea);
+        //for(int i=0;i<1000;i++) {
+        os.writeBytes("Hola si buenas");
+        //}
         
         s.close();
         
