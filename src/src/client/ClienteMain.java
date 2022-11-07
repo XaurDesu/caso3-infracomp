@@ -52,9 +52,11 @@ public class ClienteMain {
         String g2x =dc.readLine();
         //System.out.println("Esto? "+ dc.readLine());
         String auth =dc.readLine();
-        byte[] abyte = str2byte(auth);
+        System.out.println(g2x);
+        byte[] byte_authentication = str2byte(auth);
         try {
-			if(f.checkSignature(publicaServidor, abyte, g2x)) {
+        	String msj = g+","+p+","+g2x;
+			if(f.checkSignature(publicaServidor, byte_authentication, msj)) {
 				System.out.println("Check correct");
 				ac.println("OK");
 			}
@@ -67,7 +69,6 @@ public class ClienteMain {
 			e.printStackTrace();
 		}
         
-        //Esta monda del OK de los test
         
         //G2Y
         ac.println("23");
