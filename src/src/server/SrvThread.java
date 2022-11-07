@@ -69,12 +69,8 @@ public class SrvThread extends Thread{
 			PrintWriter ac = new PrintWriter(sc.getOutputStream() , true);
 			BufferedReader dc = new BufferedReader(new InputStreamReader(sc.getInputStream()));
 			
-			os = new DataOutputStream(sc.getOutputStream());
-			os.writeUTF("Prueba saludo");
 			linea = dc.readLine();
-			//linea = f.adec(linea.getBytes(), privadaServidor);
 			
-			System.out.println(linea);
 			System.out.println(dlg + "reading request: " + linea);
 			
 			
@@ -95,10 +91,13 @@ public class SrvThread extends Thread{
     		ac.println(str_valor_comun);
     		
     		if (mod==0) {
+    			ac.println("se fue por el 0");
     			exito = opt0(str_valor_comun, ac, dc);
     		} else if (mod==1){
+    			ac.println("se fue por el 1");
     			exito = opt1( str_valor_comun, ac, dc, bix, privadaServidor);
     		} else if (mod==2) {
+    			ac.println("se fue por el 2");
     			exito = opt2( str_valor_comun, ac, dc, bix, privadaServidor);
 			}
 	        if (exito)
