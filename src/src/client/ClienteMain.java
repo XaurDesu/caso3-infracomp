@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.security.*;
 import java.net.*;
 import server.SecurityFunctions;
@@ -52,7 +53,7 @@ public class ClienteMain {
         String g2x =dc.readLine();
         //System.out.println("Esto? "+ dc.readLine());
         String auth =dc.readLine();
-        System.out.println(g2x);
+        //System.out.println(g2x);
         byte[] byte_authentication = str2byte(auth);
         try {
         	String msj = g+","+p+","+g2x;
@@ -70,9 +71,19 @@ public class ClienteMain {
 		}
         
         
-        //G2Y
-        ac.println("23");
+        //Calcular G2Y = g*x mod p o es z = y*x mod p
+        BigInteger g1 = new BigInteger(g);
+        BigInteger p1 = new BigInteger(p);
+        BigInteger g2x1 = new BigInteger(g2x);
+        SecureRandom r = new SecureRandom();
+        int x = Math.abs(r.nextInt());
+		
+		Long longx = Long.valueOf(x);
+        BigInteger bix = BigInteger.valueOf(longx);
+        BigInteger y = g1.modPow(bix, g2x1);
+        ac.println(y);
         //str_consulta
+        
         ac.println("1");
         //str_mac
         ac.println("3");

@@ -144,7 +144,7 @@ public class SrvThread extends Thread{
 		boolean exito = true;
 		String msj = g.toString()+","+p.toString()+","+str_valor_comun;
 		byte[] byte_authentication = f.sign(privadaServidor, msj);
-		System.out.println(msj);
+		//System.out.println(msj);
 		String str_authentication = byte2str(byte_authentication);
 		ac.println(str_authentication);
 		linea = dc.readLine();
@@ -176,6 +176,7 @@ public class SrvThread extends Thread{
 			byte[] byte_mac = str2byte(str_mac);
 			
 			// Espera consulta del cliente
+			
 			// debe responder con el número + 1
 
 			byte[] iv1 = str2byte(str_iv1);
