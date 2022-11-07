@@ -28,8 +28,7 @@ public class ClienteMain {
         f = new SecurityFunctions();
         String xd = "1";
         dlg = new String("concurrent server " + 0 + ": ");
-        PrivateKey privadaServidor = f.read_kmin("../../datos_asim_srv.pri",dlg);
-		PublicKey publicaServidor = f.read_kplus("../../datos_asim_srv.pub",dlg);
+        PublicKey publicaServidor = f.read_kplus("../../datos_asim_srv.pub",dlg);
 //		try {
 //			byte[] cifrado = f.aenc(publicaServidor, xd);
 //			String recuperado1 = f.adec(cifrado, privadaServidor);
@@ -48,13 +47,28 @@ public class ClienteMain {
         BufferedReader dc = new BufferedReader(new InputStreamReader(s.getInputStream()));
         ac.println("SECURE INIT");
         
-        System.out.println("G: "+dc.readLine());
-        System.out.println("P: "+dc.readLine());
-        System.out.println("G2X "+dc.readLine());
-        System.out.println("Esto? "+ dc.readLine());
-        System.out.println("str_authentication "+ dc.readLine());
+        String g =dc.readLine();
+        String p =dc.readLine();
+        String g2x =dc.readLine();
+        //System.out.println("Esto? "+ dc.readLine());
+        String auth =dc.readLine();
+        byte[] abyte = str2byte(auth);
+        try {
+			if(f.checkSignature(publicaServidor, abyte, g2x)) {
+				System.out.println("Check correct");
+				ac.println("OK");
+			}
+			else {
+				System.out.println("Check incorrect");
+				ac.println("ERROR");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         //Esta monda del OK de los test
-        ac.println("OK");
+        
         //G2Y
         ac.println("23");
         //str_consulta
@@ -78,4 +92,13 @@ public class ClienteMain {
         
     
     }
+    public static byte[] str2byte( String ss)
+	{	
+		// Encapsulamiento con hexadecimales
+		byte[] ret = new byte[ss.length()/2];
+		for (int i = 0 ; i < ret.length ; i++) {
+			ret[i] = (byte) Integer.parseInt(ss.substring(i*2,(i+1)*2), 16);
+		}
+		return ret;
+	}
 }

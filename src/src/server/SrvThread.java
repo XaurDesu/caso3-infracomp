@@ -91,13 +91,13 @@ public class SrvThread extends Thread{
     		ac.println(str_valor_comun);
     		
     		if (mod==0) {
-    			ac.println("se fue por el 0");
+    			
     			exito = opt0(str_valor_comun, ac, dc);
     		} else if (mod==1){
-    			ac.println("se fue por el 1");
+    			//ac.println("se fue por el 1");
     			exito = opt1( str_valor_comun, ac, dc, bix, privadaServidor);
     		} else if (mod==2) {
-    			ac.println("se fue por el 2");
+    			//ac.println("se fue por el 2");
     			exito = opt2( str_valor_comun, ac, dc, bix, privadaServidor);
 			}
 	        if (exito)
@@ -120,6 +120,7 @@ public class SrvThread extends Thread{
 		// ERROR: -> signing with a different private key
 		//
 		byte[] byte_authentication = f.sign(privadaError, msj);
+		System.out.println(msj);
 		String str_authentication = byte2str(byte_authentication);
 		ac.println(str_authentication);
 		linea = dc.readLine();
@@ -143,6 +144,7 @@ public class SrvThread extends Thread{
 		boolean exito = true;
 		String msj = g.toString()+","+p.toString()+","+str_valor_comun;
 		byte[] byte_authentication = f.sign(privadaServidor, msj);
+		System.out.println(msj);
 		String str_authentication = byte2str(byte_authentication);
 		ac.println(str_authentication);
 		linea = dc.readLine();
@@ -238,6 +240,7 @@ public class SrvThread extends Thread{
 		boolean exito = true;
 		String msj = g.toString()+","+p.toString()+","+str_valor_comun;
 		byte[] byte_authentication = f.sign(privadaServidor, msj);
+		System.out.println(msj);
 		String str_authentication = byte2str(byte_authentication);
 		ac.println(str_authentication);
 		linea = dc.readLine();
