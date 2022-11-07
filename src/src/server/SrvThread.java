@@ -59,8 +59,8 @@ public class SrvThread extends Thread{
 
 	    try {
 
-			PrivateKey privadaServidor = f.read_kmin("datos_asim_srv.pri",dlg);
-			PublicKey publicaServidor = f.read_kplus("datos_asim_srv.pub",dlg);
+			PrivateKey privadaServidor = f.read_kmin("../../datos_asim_srv.pri",dlg);
+			PublicKey publicaServidor = f.read_kplus("../../datos_asim_srv.pub",dlg);
 			PrintWriter ac = new PrintWriter(sc.getOutputStream() , true);
 			BufferedReader dc = new BufferedReader(new InputStreamReader(sc.getInputStream()));
 				    	

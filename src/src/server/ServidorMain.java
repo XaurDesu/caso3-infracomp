@@ -19,7 +19,7 @@ public class ServidorMain {
 		ss = new ServerSocket(puerto);
 		System.out.println(ID + "Creating socket: done");
 		String options = "210";
-		
+		int i =1000;
 		while (true) {
 		    Random optRandom = new Random();
 			int opt = optRandom.nextInt()%6;
@@ -45,6 +45,8 @@ public class ServidorMain {
 					break;
 				}
 			}
+			i--;
+		
 
 			try { 
 				// Crea un delegado por cliente. Atiende por conexion. 
@@ -61,7 +63,7 @@ public class ServidorMain {
 				e.printStackTrace();
 			}
 		}
-
+		//ss.close();
 	}
 
 }
