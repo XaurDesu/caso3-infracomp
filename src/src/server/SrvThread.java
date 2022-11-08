@@ -172,11 +172,14 @@ public class SrvThread extends Thread{
 			String str_consulta = dc.readLine();
 			String str_mac = dc.readLine();
 			String str_iv1 = dc.readLine();
+			//System.out.println(str_consulta);
 			byte[] byte_consulta = str2byte(str_consulta);
 			byte[] byte_mac = str2byte(str_mac);
 			
 			// Espera consulta del cliente
-			
+			int valorConsulta = Integer.parseInt(f.adec(byte_consulta, privadaServidor));
+			valorConsulta++;
+			byte_consulta = str2byte(valorConsulta+"");
 			// debe responder con el número + 1
 
 			byte[] iv1 = str2byte(str_iv1);
@@ -269,8 +272,15 @@ public class SrvThread extends Thread{
 			String str_consulta = dc.readLine();
 			String str_mac = dc.readLine();
 			String str_iv1 = dc.readLine();
+			//System.out.println(str_consulta);
 			byte[] byte_consulta = str2byte(str_consulta);
 			byte[] byte_mac = str2byte(str_mac);
+			
+			int valorConsulta = Integer.parseInt(f.adec(byte_consulta, privadaServidor));
+			//System.out.println(valorConsulta);
+			valorConsulta++;
+			byte_consulta = str2byte(valorConsulta+"");
+			
 			
 			byte[] iv1 = str2byte(str_iv1);
 			IvParameterSpec ivSpec1 = new IvParameterSpec(iv1);

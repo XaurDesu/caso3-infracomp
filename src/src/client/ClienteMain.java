@@ -27,7 +27,6 @@ public class ClienteMain {
 
         System.out.println("Connection socket created on port: "+puerto);
         f = new SecurityFunctions();
-        String xd = "1";
         dlg = new String("concurrent server " + 0 + ": ");
         PublicKey publicaServidor = f.read_kplus("../../datos_asim_srv.pub",dlg);
 //		try {
@@ -83,8 +82,16 @@ public class ClienteMain {
         BigInteger y = g1.modPow(bix, g2x1);
         ac.println(y);
         //str_consulta
+        int valorConsulta=3;
+        try {
+			byte[] cifrado = f.aenc(publicaServidor, valorConsulta+"");
+			String valor = byte2str(cifrado);
+			ac.println(valor);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
-        ac.println("1");
         //str_mac
         ac.println("3");
         //str_iv1
@@ -110,6 +117,16 @@ public class ClienteMain {
 		byte[] ret = new byte[ss.length()/2];
 		for (int i = 0 ; i < ret.length ; i++) {
 			ret[i] = (byte) Integer.parseInt(ss.substring(i*2,(i+1)*2), 16);
+		}
+		return ret;
+	}
+    public static String byte2str( byte[] b )
+	{	
+		// Encapsulamiento con hexadecimales
+		String ret = "";
+		for (int i = 0 ; i < b.length ; i++) {
+			String g = Integer.toHexString(((char)b[i])&0x00ff);
+			ret += (g.length()==1?"0":"") + g;
 		}
 		return ret;
 	}
