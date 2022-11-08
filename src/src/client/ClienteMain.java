@@ -114,9 +114,11 @@ public class ClienteMain {
         String retHmacString = byte2str(hmacReturn);
         ac.println(retHmacString);
         //str_iv1
-        ac.println("4");
+        byte[] iv1 = generateIvBytes();
+    	String str_iv1 = byte2str(iv1);
+        ac.println(str_iv1);
         
-        System.out.println("Estado (?) "+ dc.readLine());
+        System.out.println("Estado"+ dc.readLine());
         System.out.println("m1 "+ dc.readLine());
         System.out.println("m2 "+ dc.readLine());
         System.out.println("str_iv2 "+ dc.readLine());
@@ -151,5 +153,10 @@ public class ClienteMain {
 	}
     private static BigInteger calcular_llave_maestra(BigInteger base, BigInteger exponente, BigInteger modulo) {
 		return base.modPow(exponente, modulo);
+	}
+    private static byte[] generateIvBytes() {
+	    byte[] iv = new byte[16];
+	    new SecureRandom().nextBytes(iv);
+	    return iv;
 	}
 }
