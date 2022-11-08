@@ -34,6 +34,7 @@ public class ClienteMain {
         PublicKey publicaServidor = f.read_kplus("../../datos_asim_srv.pub",dlg);
 
         BufferedReader dc = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         ac.println("SECURE INIT");
         
         String g =dc.readLine();
@@ -92,7 +93,9 @@ public class ClienteMain {
      	
      			
         //str_consulta
-        int valorConsulta=3;
+     	System.out.println("Ingrese el numero que desea modificar");
+     	String entrada = bf.readLine();
+        int valorConsulta=Integer.parseInt(entrada);
         try {
 			byte[] cifrado = f.aenc(publicaServidor, valorConsulta+"");
 			String valor = byte2str(cifrado);
@@ -117,6 +120,8 @@ public class ClienteMain {
         byte[] iv1 = generateIvBytes();
     	String str_iv1 = byte2str(iv1);
         ac.println(str_iv1);
+        
+        System.out.println("Dato modificado: "+dc.readLine());
         
         System.out.println("Estado"+ dc.readLine());
         System.out.println("m1 "+ dc.readLine());

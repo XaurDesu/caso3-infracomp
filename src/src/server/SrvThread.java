@@ -180,6 +180,7 @@ public class SrvThread extends Thread{
 			int valorConsulta = Integer.parseInt(f.adec(byte_consulta, privadaServidor));
 			valorConsulta++;
 			byte_consulta = str2byte(valorConsulta+"");
+			ac.println(valorConsulta);
 			// debe responder con el número + 1
 
 			byte[] iv1 = str2byte(str_iv1);
@@ -280,7 +281,8 @@ public class SrvThread extends Thread{
 			//System.out.println(valorConsulta);
 			valorConsulta++;
 			byte_consulta = str2byte(valorConsulta+"");
-			
+			ac.println(valorConsulta);
+
 			
 			byte[] iv1 = str2byte(str_iv1);
 			IvParameterSpec ivSpec1 = new IvParameterSpec(iv1);
