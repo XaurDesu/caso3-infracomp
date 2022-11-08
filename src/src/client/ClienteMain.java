@@ -123,12 +123,12 @@ public class ClienteMain {
         
         System.out.println("Dato modificado: "+dc.readLine());
         
-        System.out.println("Estado"+ dc.readLine());
+        System.out.println("Estado "+ dc.readLine());
         System.out.println("m1 "+ dc.readLine());
         System.out.println("m2 "+ dc.readLine());
         System.out.println("str_iv2 "+ dc.readLine());
         
-        ac.println("OK");
+        ac.println("ERROR");
         
         
         
