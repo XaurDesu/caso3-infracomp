@@ -8,6 +8,9 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.*;
+
+import javax.crypto.SecretKey;
+
 import java.net.*;
 import server.SecurityFunctions;
 
@@ -29,21 +32,7 @@ public class ClienteMain {
         f = new SecurityFunctions();
         dlg = new String("concurrent server " + 0 + ": ");
         PublicKey publicaServidor = f.read_kplus("../../datos_asim_srv.pub",dlg);
-//		try {
-//			byte[] cifrado = f.aenc(publicaServidor, xd);
-//			String recuperado1 = f.adec(cifrado, privadaServidor);
-//			int alo = Integer.parseInt(recuperado1);
-//			alo++;
-//			byte[] cifrado2 = f.aenc(publicaServidor, alo+"");
-//			
-//			String recuperado = f.adec(cifrado2, privadaServidor);
-//			//System.out.println(recuperado);
-//			
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-        
+
         BufferedReader dc = new BufferedReader(new InputStreamReader(s.getInputStream()));
         ac.println("SECURE INIT");
         
@@ -77,10 +66,31 @@ public class ClienteMain {
         SecureRandom r = new SecureRandom();
         int x = Math.abs(r.nextInt());
 		
+        
+        
+
 		Long longx = Long.valueOf(x);
         BigInteger bix = BigInteger.valueOf(longx);
-        BigInteger y = g1.modPow(bix, g2x1);
-        ac.println(y);
+        BigInteger g2y = g1.modPow(bix, g2x1);
+        ac.println(g2y);
+        
+      //calcular_llave_maestra
+        BigInteger llave_maestra = calcular_llave_maestra(g2y,bix,p1);
+        
+        
+     // generating symmetric key
+        String str_llave = llave_maestra.toString();
+        SecretKey sk_srv=null;
+        SecretKey sk_mac=null;
+     	try {
+			sk_srv = f.csk1(str_llave);
+			sk_mac = f.csk2(str_llave);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+     	
+     			
         //str_consulta
         int valorConsulta=3;
         try {
@@ -93,7 +103,16 @@ public class ClienteMain {
 		}
         
         //str_mac
-        ac.println("3");
+        byte[] hmacBytes = str2byte(valorConsulta+"");
+        byte[] hmacReturn=null;
+        try {
+			hmacReturn = f.hmac(hmacBytes, sk_mac);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        String retHmacString = byte2str(hmacReturn);
+        ac.println(retHmacString);
         //str_iv1
         ac.println("4");
         
@@ -129,5 +148,8 @@ public class ClienteMain {
 			ret += (g.length()==1?"0":"") + g;
 		}
 		return ret;
+	}
+    private static BigInteger calcular_llave_maestra(BigInteger base, BigInteger exponente, BigInteger modulo) {
+		return base.modPow(exponente, modulo);
 	}
 }
