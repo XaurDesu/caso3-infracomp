@@ -94,6 +94,7 @@ public class ClienteMain {
      			
         //str_consulta
      	System.out.println("Ingrese el numero que desea modificar");
+        long start = System.nanoTime();
      	String entrada = bf.readLine();
         int valorConsulta=Integer.parseInt(entrada);
         try {
@@ -122,8 +123,12 @@ public class ClienteMain {
         ac.println(str_iv1);
         
         System.out.println("Dato modificado: "+dc.readLine());
-        
-        System.out.println("Estado "+ dc.readLine());
+
+        long finish = System.nanoTime();
+        long timeElapsed = (long) ((finish - start)*(Math.pow(10, -6)));
+        System.out.println("tiempo pasado: "+timeElapsed+" ms");
+        System.out.println("Estado"+ dc.readLine());
+
         System.out.println("m1 "+ dc.readLine());
         System.out.println("m2 "+ dc.readLine());
         System.out.println("str_iv2 "+ dc.readLine());
